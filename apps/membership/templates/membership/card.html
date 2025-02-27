@@ -1,0 +1,442 @@
+{% load static %}
+
+{% block content %}
+<div class="membership-card-container">
+    <div class="membership-card">
+        <div class="card-header">
+            <img src="{% static 'main/images/logo.svg' %}" alt="Logo" class="logo">
+            <h1>Членский билет</h1>
+        </div>
+        
+        <div class="card-body">
+            <div class="photo-section">
+                {% if user.profile.photo %}
+                    <img src="{{ user.profile.photo.url }}" alt="Member Photo" class="member-photo">
+                {% else %}
+                    <div class="photo-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="info-section">
+                <div class="info-row">
+                    <label>ФИО:</label>
+                    <span>{{ user.get_full_name }}</span>
+                </div>
+                <div class="info-row">
+                    <label>Email:</label>
+                    <span>{{ user.email }}</span>
+                </div>
+                <div class="info-row">
+                    <label>Баланс:</label>
+                    <span>{{ user.profile.balance|default:"0" }} ₽</span>
+                </div>
+                <div class="info-row">
+                    <label>Номер билета:</label>
+                    <span>{{ user.profile.membership_number|default:"Не назначен" }}</span>
+                </div>
+                <div class="info-row">
+                    <label>Дата регистрации:</label>
+                    <span>{{ user.profile.join_date|date:"d.m.Y"|default:"Не указана" }}</span>
+                </div>
+                <div class="info-row">
+                    <label>Действителен до:</label>
+                    <span>{{ user.profile.valid_until|date:"d.m.Y"|default:"Не активирован" }}</span>
+                </div>
+                <div class="info-row">
+                    <label>Образование:</label>
+                    <span>{{ user.profile.education|default:"Не указано" }}</span>
+                </div>
+                <div class="info-row">
+                    <label>Дата рождения:</label>
+                    <span>{{ user.profile.date_of_birth|date:"d.m.Y"|default:"Не указана" }}</span>
+                </div>
+                <div class="info-row">
+                    <label>Телефон:</label>
+                    <span>{{ user.profile.phone|default:"Не указан" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Шкала оставшихся дней -->
+        <div class="expiration-section">
+            <label>Осталось дней:</label>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <span id="days-left"></span>
+        </div>
+
+
+
+        <!-- Добавляем секцию с балансом и оплатой -->
+        <div class="payment-section">
+            <form id="renewMembershipForm" method="post" action="{% url 'membership:renew_membership' %}">
+                {% csrf_token %}
+                <button type="submit" class="payment-button">
+                    <i class="fas fa-refresh"></i> Продлить членство
+                </button>
+            </form>
+
+            <form id="activateSubscriptionForm" method="post" action="{% url 'membership:activate_subscription' %}">
+                {% csrf_token %}
+                <div class="payment-method-container">
+                    <label for="subscription">Выберите подписку:</label>
+                    <select name="subscription" id="subscription" onchange="updateAmount()">
+                        {% for subscription in subscriptions %}
+                            <option value="{{ subscription.id }}" data-amount="{{ subscription.amount }}">{{ subscription.name }} ({{ subscription.amount }} ₽)</option>
+                        {% endfor %}
+                    </select>
+                    <input type="hidden" name="amount" id="subscription-amount" value="1000">
+                    <label for="payment_method">Выберите способ оплаты:</label>
+                    <div class="payment-methods">
+                        <div class="payment-option">
+                            <input type="radio" name="payment_method" id="balance" value="balance" checked>
+                            <label for="balance">С баланса</label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" name="payment_method" id="card" value="card">
+                            <label for="card">Картой</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="payment-button">
+                    <i class="fas fa-check"></i> Активировать подписку
+                </button>
+            </form>
+
+            <form id="paymentForm" method="post" action="{% url 'membership:process_payment' %}">
+                {% csrf_token %}
+                <input type="hidden" name="amount" value="1000">
+                <button type="submit" class="payment-button">
+                    <i class="fas fa-credit-card"></i> Оплатить
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .membership-card-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        background-color: #f5f5f5;
+    }
+
+    .membership-card {
+        background: #fff;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        overflow: hidden;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .card-header {
+        background: #7000FF;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .card-header .logo {
+        height: 50px;
+        margin-bottom: 10px;
+    }
+
+    .card-header h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .card-body {
+        padding: 30px;
+        display: flex;
+        gap: 30px;
+    }
+
+    .photo-section {
+        flex: 0 0 150px;
+    }
+
+    .member-photo, .photo-placeholder {
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+        object-fit: cover;
+        background: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .photo-placeholder i {
+        font-size: 50px;
+        color: #ccc;
+    }
+
+    .info-section {
+        flex: 1;
+    }
+
+    .info-row {
+        margin-bottom: 15px;
+    }
+
+    .info-row label {
+        display: block;
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .info-row span {
+        display: block;
+        font-size: 16px;
+        color: #333;
+        font-weight: 500;
+        background: #f0f8ff;
+        padding: 5px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-footer {
+        padding: 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .qr-code {
+        width: 100px;
+        height: 100px;
+        background: #f0f0f0;
+        border-radius: 5px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-body {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .photo-section {
+            margin-bottom: 20px;
+        }
+
+        .info-section {
+            width: 100%;
+        }
+    }
+
+    .payment-section {
+        padding: 20px;
+        border-top: 1px solid #eee;
+        background: #f8f9fa;
+    }
+
+    .balance-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .balance-amount, .valid-until {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .label {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .amount {
+        font-size: 24px;
+        font-weight: bold;
+        color: #7000FF;
+    }
+
+    .date {
+        font-size: 18px;
+        color: #333;
+    }
+
+    .payment-button {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        background: #4CAF50;
+        color: white;
+    }
+
+    .payment-button:hover {
+        background: #45a049;
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 576px) {
+        .membership-card {
+            margin: 10px;
+        }
+    }
+
+    .expiration-section {
+        padding: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .progress-bar {
+        background: #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+        height: 20px;
+        margin-top: 10px;
+    }
+
+    .progress {
+        background: #7000FF;
+        height: 100%;
+        width: 0; /* Начальная ширина */
+        transition: width 0.5s ease;
+    }
+
+    .payment-method-container {
+        margin-bottom: 20px;
+    }
+
+    .payment-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .payment-option {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        transition: background 0.3s, transform 0.3s;
+    }
+
+    .payment-option:hover {
+        background: #f0f0f0;
+        transform: scale(1.02);
+    }
+
+    .payment-option input[type="radio"] {
+        margin-right: 10px;
+    }
+</style>
+
+<script>
+// Добавляем отладочный вывод
+console.log('Script loaded');
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('paymentForm');
+    console.log('Form found:', form); // Проверяем, найдена ли форма
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log('Form submitted'); // Проверяем, срабатывает ли событие
+        
+        const formData = new FormData(this);
+        console.log('FormData:', Object.fromEntries(formData)); // Смотрим данные формы
+        
+        fetch('{% url "membership:process_payment" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => {
+            console.log('Response status:', response.status); // Проверяем статус ответа
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response data:', data); // Смотрим ответ сервера
+            if (data.status === 'success' && data.payment_url) {
+                console.log('Redirecting to:', data.payment_url);
+                window.location.href = data.payment_url;
+            } else {
+                alert(data.message || 'Произошла ошибка при создании платежа');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Произошла ошибка при обработке платежа');
+        });
+    });
+
+    // Добавляем обработчики для кнопок
+    const buttons = document.querySelectorAll('.payment-button');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            console.log('Button clicked:', this.value); // Проверяем клик по кнопке
+        });
+    });
+
+    const validUntil = new Date("{{ user.profile.valid_until|date:'Y-m-d' }}"); // Дата окончания
+    const today = new Date();
+    const timeDiff = validUntil - today; // Разница во времени
+    const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Оставшиеся дни
+
+    // Обновляем текст с оставшимися днями
+    document.getElementById('days-left').innerText = daysLeft > 0 ? `${daysLeft} дней осталось` : "Членство истекло";
+
+    // Обновляем ширину прогресс-бара
+    const progressBar = document.getElementById('progress');
+    if (daysLeft > 0) {
+        const totalDays = Math.ceil((validUntil - new Date("{{ user.profile.join_date|date:'Y-m-d' }}")) / (1000 * 3600 * 24));
+        const percentage = (daysLeft / totalDays) * 100;
+        progressBar.style.width = percentage + '%';
+    } else {
+        progressBar.style.width = '0%'; // Если членство истекло
+    }
+});
+
+function updateAmount() {
+    const subscriptionSelect = document.getElementById('subscription');
+    const selectedOption = subscriptionSelect.options[subscriptionSelect.selectedIndex];
+    const amount = selectedOption.getAttribute('data-amount');
+    document.getElementById('subscription-amount').value = amount;
+}
+</script>
+
+<!-- Добавим отладочную информацию -->
+<div style="display: none;" id="debug-info">
+    <p>CSRF Token: {{ csrf_token }}</p>
+    <p>Payment URL: {% url 'membership:process_payment' %}</p>
+</div>
+{% endblock %} 

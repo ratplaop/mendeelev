@@ -1,0 +1,159 @@
+{% load static %}
+
+{% block content %}
+<div class="register-container">
+    <div class="register-box">
+        <div class="register-header">
+            <h2>Регистрация</h2>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrfmiddlewaretoken" value="rK9yGf3nq4v7TAP0EeBgPuXwdMuI9eH07XK6zk0NifJIgNS0F4ymL18FMLzr2e0i">
+            
+            <div class="form-group">
+                <label for="id_username">Username:</label>
+                <input type="text" name="username" maxlength="150" required id="id_username">
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password">Password:</label>
+                <input type="password" name="password" required id="id_password">
+            </div>
+            
+            <div class="form-group">
+                <label for="id_email">Email:</label>
+                <input type="email" name="email" maxlength="320" required id="id_email">
+            </div>
+
+            <div class="form-group">
+                <label for="id_education">Образование:</label>
+                <input type="text" name="education" maxlength="255" id="id_education">
+            </div>
+
+            <div class="form-group">
+                <label for="id_date_of_birth">Дата рождения:</label>
+                <input type="date" name="date_of_birth" id="id_date_of_birth" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_phone">Телефон:</label>
+                <input type="text" name="phone" maxlength="20" id="id_phone">
+            </div>
+
+            <div class="form-group">
+                <label for="id_photo">Фотография:</label>
+                <input type="file" name="photo" accept="image/*" id="id_photo">
+            </div>
+
+            <button type="submit" class="register-button">Зарегистрироваться</button>
+        </form>
+
+        <div class="register-footer">
+            <a href="/membership/login/">Уже есть аккаунт? Войти</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .register-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        background-color: #f5f5f5;
+    }
+
+    .register-box {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        padding: 40px;
+    }
+
+    .register-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .register-header h2 {
+        color: #333;
+        margin: 0;
+    }
+
+    .form-group {
+        margin-bottom: 20px; /* Уменьшение отступов между полями */
+        padding: 10px; /* Уменьшение отступов внутри полей */
+        background: #f9f9f9; /* Светлый фон для каждого поля */
+        border-radius: 8px; /* Закругленные углы */
+        transition: background-color 0.3s ease;
+    }
+
+    .form-group:hover {
+        background: #e0f7fa; /* Подсветка при наведении */
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 5px; /* Уменьшение отступа между меткой и полем */
+        display: block; /* Обеспечиваем блочное отображение меток */
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 10px; /* Уменьшение отступов внутри полей */
+        border: 1px solid #ccc; /* Уменьшение толщины рамки */
+        border-radius: 5px; /* Закругленные углы */
+        font-size: 16px;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: #4CAF50; /* Изменение цвета рамки при фокусе */
+        outline: none; /* Убираем стандартный контур */
+        background-color: #f0fff0; /* Светлый фон при фокусе */
+    }
+
+    .register-button {
+        width: 100%;
+        padding: 15px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .register-button:hover {
+        background: #45a049;
+        transform: scale(1.05);
+    }
+
+    .register-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .register-footer a {
+        color: #7000FF;
+        text-decoration: none;
+    }
+
+    .register-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+        .register-box {
+            padding: 20px;
+        }
+    }
+</style>
+{% endblock %} 

@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание приложения</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'control_panel/css/style.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #7003ff;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #7003ff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5a02cc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Создание нового приложения</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="app_name">Имя приложения:</label>
+        <input type="text" id="app_name" name="app_name" required>
+        
+        <label for="app_directory">Директория установки (по умолчанию: текущая):</label>
+        <input type="text" id="app_directory" name="app_directory" placeholder="apps/" required>
+        
+        <label for="add_to_installed_apps">Добавить в INSTALLED_APPS:</label>
+        <input type="checkbox" id="add_to_installed_apps" name="add_to_installed_apps" checked>
+        
+        <button type="submit">Создать</button>
+    </form>
+    <p>{{ message }}</p>
+    <a href="{% url 'control_panel:control_panel_list' %}">Назад к списку</a>
+</body>
+</html> 

@@ -1,0 +1,146 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+    <head>
+        <title>Главная</title>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}">
+    </head>
+    <body>
+
+        {% include 'main/header.html' %}
+
+        {% block content %}
+        <div class="container">
+            <div class="content">
+                <div class="book-section">
+                    <h1 class="category-title">{{ category.name }}</h1>
+                    <ul class="book-list">
+                        {% for book in books %}
+                            <li class="book-item">
+                                <span class="book-title">{{ book.title }}</span> by <span class="book-author">{{ book.author }}</span> - 
+                                <a href="{% url 'download_book' book.id %}" class="download-button">Скачать</a>
+                            </li>
+                        {% empty %}
+                            <li>Нет доступных книг в этой категории.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="category-section">
+                    <h2>Категории</h2>
+                    <ul class="category-list">
+                        {% for category in categories %}
+                            <li>
+                                <a href="{% url 'book_list' category.id %}" class="category-link">{{ category.name }}</a>
+                            </li>
+                        {% empty %}
+                            <li>Нет доступных категорий.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        
+
+        {{ news }}
+
+        <style>
+            .container {
+                max-width: 1200px;
+                margin: 40px auto; /* Отступы сверху и снизу */
+                padding: 20px;
+                text-align: center;
+                display: flex;
+                justify-content: space-between; /* Разделение контента */
+            }
+
+            .content {
+                display: flex;
+                width: 100%;
+            }
+
+            .book-section {
+                flex: 3; /* Занимает 3/4 ширины */
+                text-align: left; /* Выравнивание текста влево */
+            }
+
+            .category-section {
+                flex: 1; /* Занимает 1/4 ширины */
+                padding-left: 20px; /* Отступ слева */
+                text-align: left; /* Выравнивание текста влево */
+            }
+
+            .category-title {
+                font-size: 36px; /* Увеличенный размер шрифта для заголовка */
+                margin-bottom: 20px;
+                animation: fadeIn 1s ease-in-out; /* Анимация появления */
+            }
+
+            .book-list {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .book-item {
+                margin: 15px 0;
+                font-size: 18px; /* Размер шрифта для книг */
+                transition: transform 0.3s; /* Плавный переход для анимации */
+            }
+
+            .book-item:hover {
+                transform: scale(1.05); /* Увеличение при наведении */
+            }
+
+            .download-button {
+                display: inline-block;
+                padding: 5px 10px;
+                font-size: 16px;
+                color: white;
+                background-color: #007BFF; /* Цвет кнопки */
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                transition: background-color 0.3s;
+            }
+
+            .download-button:hover {
+                background-color: #0056b3; /* Цвет кнопки при наведении */
+            }
+
+            .category-list {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .category-link {
+                display: block;
+                padding: 10px;
+                color: #007BFF; /* Цвет ссылок */
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+            .category-link:hover {
+                color: #0056b3; /* Цвет ссылок при наведении */
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+        </style>
+
+        {% include 'main/events.html' %}
+        {% include 'main/footer.html' %}
+
+    </body>
+</html>

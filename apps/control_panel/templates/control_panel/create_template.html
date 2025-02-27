@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание шаблона</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'control_panel/css/style.css' %}">
+</head>
+<body>
+    <h1>Создание шаблона</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="template_name">Имя шаблона:</label>
+        <input type="text" id="template_name" name="template_name" required>
+        <label for="content">Содержимое:</label>
+        <textarea id="content" name="content" rows="10" required></textarea>
+        <button type="submit">Создать шаблон</button>
+    </form>
+    {% if message %}
+        <p class="message">{{ message }}</p>
+    {% endif %}
+    <a href="{% url 'control_panel:dashboard' %}">Назад к главной панели</a>
+</body>
+</html> 

@@ -1,0 +1,113 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+    <head>
+        <title>Главная</title>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}">
+    </head>
+    <body>
+
+        {% include 'main/header.html' %}
+
+        <div class="event">
+            <div class="event-container">
+                <a href="{% url 'main:event_detail' event.pk %}" target="_blank" class="event-link"></a>
+                <img src="{{ event_item.image.url }}" alt="{{ event_item.title }}" class="event-image">
+                <h1>{{ event_item.title }}</h1>
+                <p class="date">Дата: {{ event_item.date }}</p>
+            </div>
+        </div>
+		
+		
+
+        <style>
+            .news {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                background: #7003ff;
+                padding-bottom: 5rem;
+                animation: fadeIn 1s ease-in-out;
+            }
+
+            .news-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+                background-color: #fff;
+                border-radius: 15px;
+                padding: 3rem;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                transform: translateY(50px);
+                animation: slideUp 1s ease-out forwards;
+            }
+
+            .news-image {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+                transition: transform 0.3s ease;
+            }
+
+            .news-image:hover {
+                transform: scale(1.05);
+            }
+
+            h1 {
+                color: #7003ff;
+                font-size: 2.5rem;
+                text-align: center;
+                transition: color 0.3s ease;
+            }
+
+            h1:hover {
+                color: #3a0a45;
+            }
+
+            .date {
+                background: #7003ff;
+                color: #fff;
+                padding: 1rem 2rem;
+                border-radius: 1rem;
+                font-size: 1.2rem;
+                width: fit-content;
+                transition: transform 0.3s ease;
+            }
+
+            .date:hover {
+                transform: translateY(-5px);
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideUp {
+                from {
+                    transform: translateY(50px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+        </style>
+
+        {% include 'main/events.html' %}
+        {% include 'main/footer.html' %}
+
+    </body>
+</html>

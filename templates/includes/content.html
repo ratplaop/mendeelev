@@ -1,0 +1,159 @@
+<!doctype html>
+        <html lang="ru">
+        <head>
+        {% include 'main/header.html' %}
+            <title>content</title>
+            <meta charset="UTF-8" />
+            <style>
+
+                body {
+                min-height: 100vh;
+                overflow-x: hidden;
+                padding: 0;
+                margin: 0;
+                color: #333;
+                font-size: 14px;
+                font-family: 'Onest', sans-serif;
+                font-weight: 400;
+                line-height: 17px;
+                }
+                grid_events {
+                    display: grid;
+                    width: 100%;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 2rem;
+                }
+                grid_item {
+                    background: #ffffff;
+                    border-radius: 1rem;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.5rem;
+                    padding-bottom: 1.5rem;
+                    min-height: 140px;
+                    min-width: 303px;
+                }
+                grid_item img {
+                    width: 100%;
+                    border-radius: 1rem;
+                }
+                grid_item p {
+                    margin: 0;
+                    padding: 0 1.5rem;
+                }
+
+                /* Добавление медиа-запросов для мобильной версии */
+                @media (max-width: 768px) {
+                    grid_events {
+                        grid-template-columns: repeat(2, 1fr); /* Две колонки на мобильных устройствах */
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    grid_events {
+                        grid-template-columns: 1fr; /* Одна колонка на очень маленьких экранах */
+                    }
+                }
+            </style>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <link rel="stylesheet" type="text/css" href="/static/main/css/style.css">
+        </head>
+        <body>
+            <div class="container">
+            
+                <grid_events>
+                    <grid_item>
+                        <img
+                            src="https://mendeleevfest.com/wp-content/uploads/elementor/thumbs/img_9567-1-qwya1o8xi8wk240pnjl2j1p8soizm65e7j4rrxhx9c.png">
+                            <p>Дни открытых дверей</p>
+                            <p>ФизХимФест – это уникальная интерактивная научно-образовательная платформа,
+                                созданная молодыми сотрудниками Института физической химии и электрохимии им.
+                                А.Н. Фрумкина Российской академии наук. Проект предоставляет возможность
+                                заглянуть в один из крупнейших химических исследовательских институтов России и
+                                узнать, что такое физическая химия и какие задачи повседневной жизни она
+                                помогает решать.</p>
+                        </grid_item>
+                        <grid_item>
+                            <img
+                                src="https://mendeleevfest.com/wp-content/uploads/elementor/thumbs/img_9567-1-qwya1o8xi8wk240pnjl2j1p8soizm65e7j4rrxhx9c.png">
+                                <p>Дни открытых дверей</p>
+                                <p>ФизХимФест – это уникальная интерактивная научно-образовательная платформа,
+                                    созданная молодыми сотрудниками Института физической химии и электрохимии им.
+                                    А.Н. Фрумкина Российской академии наук. Проект предоставляет возможность
+                                    заглянуть в один из крупнейших химических исследовательских институтов России и
+                                    узнать, что такое физическая химия и какие задачи повседневной жизни она
+                                    помогает решать.</p>
+                            </grid_item>
+                            <grid_item>
+                                <img
+                                    src="https://mendeleevfest.com/wp-content/uploads/elementor/thumbs/img_9567-1-qwya1o8xi8wk240pnjl2j1p8soizm65e7j4rrxhx9c.png">
+                                    <p>Дни открытых дверей</p>
+                                    <p>ФизХимФест – это уникальная интерактивная научно-образовательная платформа,
+                                        созданная молодыми сотрудниками Института физической химии и электрохимии им.
+                                        А.Н. Фрумкина Российской академии наук. Проект предоставляет возможность
+                                        заглянуть в один из крупнейших химических исследовательских институтов России и
+                                        узнать, что такое физическая химия и какие задачи повседневной жизни она
+                                        помогает решать.
+                                    </p>
+                                </grid_item>
+                                <grid_item>
+                                    <img
+                                        src="https://mendeleevfest.com/wp-content/uploads/elementor/thumbs/img_9567-1-qwya1o8xi8wk240pnjl2j1p8soizm65e7j4rrxhx9c.png">
+                                        <p>Дни открытых дверей</p>
+                                        <p>ФизХимФест – это уникальная интерактивная научно-образовательная платформа,
+                                            созданная молодыми сотрудниками Института физической химии и электрохимии им.
+                                            А.Н. Фрумкина Российской академии наук. Проект предоставляет возможность
+                                            заглянуть в один из крупнейших химических исследовательских институтов России и
+                                            узнать, что такое физическая химия и какие задачи повседневной жизни она
+                                            помогает решать.</p>
+                                    </grid_item>
+                                    <grid_item>
+                                        <img
+                                            src="https://mendeleevfest.com/wp-content/uploads/elementor/thumbs/img_9567-1-qwya1o8xi8wk240pnjl2j1p8soizm65e7j4rrxhx9c.png">
+                                            <p>Дни открытых дверей</p>
+                                            <p>ФизХимФест – это уникальная интерактивная научно-образовательная платформа,
+                                                созданная молодыми сотрудниками Института физической химии и электрохимии им.
+                                                А.Н. Фрумкина Российской академии наук. Проект предоставляет возможность
+                                                заглянуть в один из крупнейших химических исследовательских институтов России и
+                                                узнать, что такое физическая химия и какие задачи повседневной жизни она
+                                                помогает решать.</p>
+                                        </grid_item>
+                                        <grid_item>
+                                            <img
+                                                src="https://mendeleevfest.com/wp-content/uploads/elementor/thumbs/img_9567-1-qwya1o8xi8wk240pnjl2j1p8soizm65e7j4rrxhx9c.png">
+                                                <p>Дни открытых дверей</p>
+                                                <p>ФизХимФест – это уникальная интерактивная научно-образовательная платформа,
+                                                    созданная молодыми сотрудниками Института физической химии и электрохимии им.
+                                                    А.Н. Фрумкина Российской академии наук. Проект предоставляет возможность
+                                                    заглянуть в один из крупнейших химических исследовательских институтов России и
+                                                    узнать, что такое физическая химия и какие задачи повседневной жизни она
+                                                    помогает решать.
+                                                </p>
+                                            </grid_item>
+                            </grid_events>
+                
+                           
+                
+                
+            </div>
+            {% include 'main/events.html' %}
+            {% include 'main/footer.html' %}
+
+                    <style>
+                .container {
+    width: 90%; /* Ширина контейнера 90% */
+    margin: 20px auto; /* Центрирование контейнера с отступами сверху и снизу */
+    padding: 20px; /* Внутренние отступы */
+    
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Анимация при наведении */
+}
+
+.container:hover {
+    transform: translateY(-5px); /* Подъем контейнера при наведении */
+                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличение тени при наведении */
+                }
+            </style>
+        </body>
+        </html>

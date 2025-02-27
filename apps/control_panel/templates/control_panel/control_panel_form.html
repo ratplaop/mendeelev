@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.pk %}Редактировать{% else %}Создать{% endif %} панель</title>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Редактировать{% else %}Создать{% endif %} панель</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="{% url 'control_panel:control_panel_list' %}">Назад к списку</a>
+</body>
+</html>

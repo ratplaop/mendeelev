@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>actual - Главная</title>
+</head>
+<body>
+    <h1>Добро пожаловать в приложение actual!</h1>
+    <p>Это базовый шаблон для приложения actual.</p>
+
+    <h2>Последние новости:</h2>
+    <ul>
+        {% for actual in actuals %}
+            <li>
+                <h3><a href="{% url 'actual:actual_detail' actual.id %}">{{ actual.title }}</a></h3>
+                <p>{{ actual.content|slice:":100" }}{% if actual.content|length > 100 %}...{% endif %}</p>
+                {% if actual.image %}
+                    <img src="{{ actual.image.url }}" alt="{{ actual.title }}" style="width: 70%; height: auto; border-radius: 8px;">
+                {% endif %}
+                <p>Дата создания: {{ actual.date }}</p>
+                <p>Автор: {{ actual.author.username }}</p>
+            </li>
+        {% empty %}
+            <li>Нет актуальных записей.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

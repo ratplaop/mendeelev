@@ -1,0 +1,104 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+    <head>
+        <title>{{ actual.title }}</title>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}">
+    </head>
+    <body>
+
+        {% include 'main/header.html' %}
+
+        <div class="details-container">  <!-- Обернем в контейнер -->
+            <h1>{{ actual.title }}</h1>
+            <p class="date">Дата создания: {{ actual.date }}</p>
+            <p class="author">Автор: {{ actual.author.username }}</p>
+            {% if actual.image %}
+                <img src="{{ actual.image.url }}" alt="{{ actual.title }}" class="news-image">
+            {% endif %}
+            <div class="details-description">
+                {{ actual.content|linebreaks }}  <!-- Вывод полного контента с переносами -->
+            </div>
+            <a href="{% url 'actual:actual_index' %}" class="back-link">Назад к списку</a>
+        </div>
+
+        <style>
+            .details-container {
+                width: 70%;  /* Занимает 70% ширины экрана */
+                margin: 2rem auto;  /* Центрирование контейнера и отступы сверху и снизу */
+                padding: 2rem;
+                background: #eadbff;  /* Цвет фона */
+                border-radius: 10px;  /* Закругленные углы */
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);  /* Тень */
+                animation: fadeIn 0.5s ease-in-out;  /* Анимация появления */
+            }
+
+            h1 {
+                line-height: normal;
+                color: #7003ff;
+                margin: 1rem 0;
+                text-align: center; /* Центрирование заголовка */
+            }
+
+            .date, .author {
+                background: #fff;
+                padding: 0.5rem 1rem;
+                border-radius: 1rem;
+                margin: 0.5rem 0; /* Отступы между элементами */
+                display: inline-block; /* Чтобы элементы не растягивались на всю ширину */
+            }
+
+            .details-description {
+                color: #000000;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 1rem;
+                border-radius: 8px;
+                margin-top: 1rem;
+                text-align: left;
+                line-height: 1.6; /* Высота строки для лучшей читаемости */
+                width: 100%;
+            }
+
+            .news-image {
+                width: 70%;
+                height: auto;
+                border-radius: 8px;
+                margin: 1rem 0; /* Отступы сверху и снизу */
+            }
+
+            .back-link {
+                display: inline-block; /* Чтобы ссылка выглядела как кнопка */
+                margin-top: 1rem; /* Отступ сверху */
+                padding: 0.5rem 1rem; /* Отступы внутри кнопки */
+                background-color: #7003ff; /* Цвет фона кнопки */
+                color: white; /* Цвет текста */
+                border-radius: 5px; /* Закругленные углы */
+                text-decoration: none; /* Убираем подчеркивание */
+            }
+
+            .back-link:hover {
+                background-color: #5a02cc; /* Цвет фона при наведении */
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+
+        {% include 'main/events.html' %}
+        {% include 'main/footer.html' %}
+
+    </body>
+</html>

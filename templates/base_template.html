@@ -1,0 +1,23 @@
+<!-- templates/includes/base_template.html -->
+{% load static %}
+{% include 'main/header.html' %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        {% block content %}
+        {{ content|safe }}  <!-- Отображаем контент -->
+        {% endblock %}
+    </div>
+    {% include 'main/events.html' %}
+    {% include 'main/footer.html' %}
+
+</body>
+</html>

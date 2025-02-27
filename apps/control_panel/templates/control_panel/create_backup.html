@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание резервной копии</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'control_panel/css/style.css' %}">
+</head>
+<body>
+    <h1>Создание резервной копии</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="backup_name">Имя резервной копии:</label>
+        <input type="text" id="backup_name" name="backup_name" required>
+        <button type="submit">Создать резервную копию</button>
+    </form>
+    {% if message %}
+        <p class="message">{{ message }}</p>
+    {% endif %}
+    
+    <h2>Существующие резервные копии:</h2>
+    <ul>
+        {% for backup in existing_backups %}
+            <li>{{ backup }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'control_panel:dashboard' %}">Назад к главной панели</a>
+</body>
+</html> 

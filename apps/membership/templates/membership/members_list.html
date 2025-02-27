@@ -1,0 +1,91 @@
+{% load static %}
+
+{% block content %}
+<div class="members-container">
+    <h1>Список членов</h1>
+    <table class="members-table">
+        <thead>
+            <tr>
+                <th>Фото</th>
+                <th>ФИО</th>
+                <th>Email</th>
+                <th>Дата регистрации</th>
+                <th>Действителен до</th>
+                <th>Баланс</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>
+                    {% if member.photo %}
+                        <img src="{{ member.photo.url }}" alt="Member Photo" class="member-photo">
+                    {% else %}
+                        <div class="photo-placeholder">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>{{ member.user.get_full_name }}</td>
+                <td>{{ member.user.email }}</td>
+                <td>{{ member.join_date|date:"d.m.Y" }}</td>
+                <td>{{ member.valid_until|date:"d.m.Y" }}</td>
+                <td>{{ member.balance|default:"0" }} ₽</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">Нет активных членов.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .members-container {
+        padding: 20px;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .members-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .members-table th, .members-table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    .members-table th {
+        background-color: #7000FF;
+        color: white;
+    }
+
+    .members-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .member-photo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .photo-placeholder {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+{% endblock %} 

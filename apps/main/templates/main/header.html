@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/right-nav-style.css' %}">
+    <title>Меню с анимацией</title>
+    <style>
+        /* Основные стили */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Для верхней строки */
+        top {
+            background-color: #7000FF;
+            color: white;
+            padding: 0px 0;
+            font-size: 14px;
+        }
+
+        top inner {
+            display: flex;
+            justify-content: center;
+            padding: 0px 0;
+            gap: 20px;
+        }
+
+       
+
+        top in {
+            display: inline-block;
+        }
+
+        /* Стиль для хедера */
+        header {
+            background-color: #7000FF;
+            padding: 0px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #7000FF;
+        }
+
+        header logo img {
+            max-height: 50px;
+        }
+
+        header .desktop-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        header .desktop-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+
+        header .desktop-menu a:hover {
+            color: #007bff;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        /* Для иконок */
+        header .right a {
+            margin-left: 20px;
+        }
+
+        header .menu-icon {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* Мобильная версия меню */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background-color: rgba(255, 255, 255, 0.9);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 60px 20px 20px 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Адаптивность */
+        @media screen and (max-width: 768px) {
+            header .desktop-menu {
+                display: none;
+            }
+
+            header .menu-icon {
+                display: block;
+            }
+
+            .mobile-menu a {
+                font-size: 18px;
+            }
+
+            carousel {
+            height: 0px;
+            padding: 7rem 0;
+  }
+        }
+    </style>
+</head>
+<body>
+
+    <top>
+ 
+    </top>
+
+    <header>
+        <inner>
+            <logo>
+                <a href="/"><img src="{% static 'main/images/logo.svg' %}" /></a>
+            </logo>
+
+            <menu class="desktop-menu">
+                <a href="http://195.2.74.203:8000/">Новости</a>
+                <a href="http://195.2.74.203:8000/">Год Менделеева</a>
+                <a href="http://195.2.74.203:8000/">Партнеры</a>
+                <a href="http://195.2.74.203:8000/">Мероприятия</a>
+                <a href="http://195.2.74.203:8000/">Конкурсы</a>
+                <a href="http://195.2.74.203:8000/">Медиа</a>
+            </menu>
+
+            <right>
+                <a href="/membership/login/"><img src="{% static 'main/images/search.svg' %}" /></a>
+                <a href="/membership/register/"><img src="{% static 'main/images/user.svg' %}" /></a>
+                
+            </right>
+        </inner>
+    
+
+    <!-- Mobile Menu -->
+   
+           <!-- 
+    Скрытый checkbox, отвечающий за переключение панели, должен быть в верхней части документа, лучше сразу после тега `<body>`
+
+    `id` атрибут предназначен для связки с атрибутом `for` тега <label>
+
+    Атрибут `hidden` указывает состояние «скрытый» у текущего элемента
+    -->
+    <input type="checkbox" id="nav-toggle" hidden>
+    <!-- 
+    Выдвижную панель размещаете ниже
+    флажка (checkbox), но не обязательно 
+    непосредственно после него, например
+    можно и в конце страницы
+    -->
+    <nav class="nav">
+        <!-- 
+    Метка с именем `id` чекбокса в `for` атрибуте
+    Символ Unicode 'TRIGRAM FOR HEAVEN' (U+2630)
+    Пустой атрибут `onclick` используем для исправления бага в iOS < 6.0
+    См: http://timpietrusky.com/advanced-checkbox-hack 
+    -->
+        <label for="nav-toggle" class="nav-toggle" onclick></label>
+        <!-- 
+    Здесь размещаете любую разметку,
+    если это меню, то скорее всего неупорядоченный список <ul>
+    -->
+        <h2 class="logo"> 
+            <a href="#">Год Менделеева</a> 
+        </h2>
+        <ul>
+            <li><a href="http://195.2.74.203:8000/">Новости</a>
+            <li><a href="http://195.2.74.203:8000/">Год Менделеева</a>
+            <li><a href="http://195.2.74.203:8000/">Партнеры</a>
+            <li><a href="http://195.2.74.203:8000/">Мероприятия</a>
+            <li><a href="http://195.2.74.203:8000/">Конкурсы</a>
+            <li><a href="http://195.2.74.203:8000/">Медиа</a>
+        </ul>
+    </nav>
+</header>
+
+    <script>
+        function toggleMenu() {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            mobileMenu.classList.toggle('open');
+        }
+    </script>
+
+</body>
+</html>

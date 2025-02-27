@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная панель</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'control_panel/css/style.css' %}">
+</head>
+<body>
+    <h1>Добро пожаловать в контрольную панель!</h1>
+    <ul>
+        <li><a href="{% url 'control_panel:create_app' %}">Создать новое приложение</a></li>
+        <li><a href="{% url 'control_panel:check_routes' %}">Проверить маршруты</a></li>
+        <li><a href="{% url 'control_panel:create_template' %}">Создать шаблон</a></li>
+        <li><a href="{% url 'control_panel:check_structure' %}">Проверить структуру проекта</a></li>
+        <li><a href="{% url 'control_panel:run_checks' %}">Запустить проверки</a></li>
+        <li><a href="{% url 'control_panel:check_settings' %}">Проверить настройки</a></li>
+        <li><a href="{% url 'control_panel:configure_new_app' %}">Конфигурировать новое приложение</a></li>
+        <li><a href="{% url 'control_panel:analyze_models' %}">Анализ моделей</a></li>
+        <li>
+            <form method="post" action="{% url 'control_panel:create_backup' %}">
+                {% csrf_token %}
+                <button type="submit">Создать резервную копию</button>
+            </form>
+        </li>
+    </ul>
+    {% if message %}
+        <p class="message">{{ message }}</p>
+    {% endif %}
+</body>
+</html> 

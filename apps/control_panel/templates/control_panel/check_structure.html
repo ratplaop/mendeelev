@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка структуры проекта</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'control_panel/css/style.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #7003ff;
+        }
+
+        .tree {
+            font-size: 0.8em; /* Уменьшаем размер текста */
+        }
+    </style>
+</head>
+<body>
+    <h1>Структура проекта</h1>
+    <div class="tree">
+        {% for line in structure %}
+            {{ line }}<br>
+        {% endfor %}
+    </div>
+    <a href="{% url 'control_panel:dashboard' %}">Назад к главной панели</a>
+</body>
+</html> 

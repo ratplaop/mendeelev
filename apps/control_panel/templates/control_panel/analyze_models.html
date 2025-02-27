@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ моделей</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'control_panel/css/style.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #7003ff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #7003ff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Анализ моделей</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="app_path">Путь к приложению (от корня проекта):</label>
+        <input type="text" id="app_path" name="app_path" required placeholder="например: apps/your_app">
+        <button type="submit">Анализировать</button>
+    </form>
+
+    {% if error %}
+        <p class="message">{{ error }}</p>
+    {% endif %}
+
+    {% if model_info %}
+        {% for app in model_info %}
+            <h2>Приложение: {{ app.app }}</h2>
+            {% if app.models %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Модель</th>
+                            <th>Поля</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for model in app.models %}
+                            <tr>
+                                <td>{{ model.name }}</td>
+                                <td>
+                                    {% for field in model.fields %}
+                                        {{ field.0 }} ({{ field.1 }})<br>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Нет моделей для анализа.</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <a href="{% url 'control_panel:dashboard' %}">Назад к главной панели</a>
+</body>
+</html> 

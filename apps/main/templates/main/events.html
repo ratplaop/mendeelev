@@ -1,0 +1,158 @@
+{% load static %}
+<script src="/static/main/js/swiffy-slider.js" crossorigin="anonymous" defer></script>
+<link href="/static/main/css/swiffy-slider.min.css" rel="stylesheet" crossorigin="anonymous">
+<style>
+    /* Глобальные стили */
+    body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+  color: #333;
+
+   }
+
+    
+    /* Стили для слоев */
+    layer_l, layer_r {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;  /* Занимает всю ширину на мобильных устройствах */
+        max-width: 300px;  /* Ограничиваем максимальную ширину */
+        margin: 10px;  /* Отступы между слоями */
+    }
+
+    /* Мобильные стили */
+    @media (max-width: 768px) {
+        layer_l, layer_r {
+            display: none;  /* Скрываем слои на мобильных устройствах */
+        }
+   
+        .highlighted-slider-container {
+  /* Пример стилей для выделенного контейнера */
+  padding: 20px; /* Отступы вокруг слайдера */
+ 
+  border-radius: 10px; /* Закругленные углы */
+  
+  height: 100%;
+  width: 100%;
+    }
+    
+    }
+
+    .highlighted-slider-container {
+  /* Пример стилей для выделенного контейнера */
+  padding: 20px; /* Отступы вокруг слайдера */
+  
+  border-radius: 10px; /* Закругленные углы */
+  
+  height: 100%;
+  width: 100%;
+}
+
+    /* Остальные стили */
+    .red_title {
+        text-align: center;
+        margin: 20px 0;
+        font-size: 2.5em;
+    }
+
+    .mend_in {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+    }
+
+    .mend_img {
+        width: 100%;  /* Занимает всю ширину */
+        height: auto;  /* Пропорциональная высота */
+        background-size: cover;  /* Обеспечивает покрытие фона */
+    }
+
+    .mend_text {
+        text-align: justify;  /* Выравнивание текста */
+        margin: 10px 0;
+    }
+
+    /* Стили для слайдера */
+    .coop_in {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .slider-container {
+        display: flex;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .slider-container div {
+        flex: 0 0 auto;  /* Элементы не сжимаются */
+        width: 100%;  /* Занимает всю ширину */
+    }
+
+    /* Остальные стили для слайдера */
+</style>
+<redblock>
+    <inner>
+        <layer_l></layer_l>
+        <layer_r></layer_r>
+
+        <red_title><img src="{% static 'main/images/title_before_2.svg' %}">Менделеевское общество</red_title>
+
+
+        <mend_in>
+            <mend_img style="background-image: url(/media/mend.png);"></mend_img>
+            <mend_text>Менделеевское общество (РХО)
+                как правопреемник Русского химического
+                общества и Всесоюзного химического общества
+                имени Д.И. Менделеева успешно продолжает
+                традиции своих предшественников, активно
+                содействуя распространению химических
+                знаний и устойчивому развитию общества
+                на основе достижений науки и техники. История
+                общества, созданного при участии самого
+                Менделеева и продолжающего на протяжении
+                более чем полуторавековой истории с момента
+                своего основания в 1868 году, сохранять память
+                о наследии великих учёных-химиков составляет
+                славную историю Российской академии наук.
+                В руководстве общества всегда стояли
+                выдающиеся учёные-члены академии наук.
+            </mend_text>
+        </mend_in>
+    </inner>
+</redblock>
+
+<coop>
+    <inner>
+        <cp_title><img src="{% static 'main/images/title_before.svg' %}">Сотрудничество</cp_title>
+
+        <coop_in>
+            <div class="highlighted-slider-container">
+                <div class="swiffy-slider slider-item-show4 slider-nav-outside slider-nav-dark slider-nav-sm slider-nav-visible slider-nav-page slider-item-snapstart slider-nav-autoplay slider-nav-autopause slider-item-ratio slider-item-ratio-contain slider-item-ratio-32x9 bg-white shadow-lg py-3 py-lg-4" data-slider-nav-autoplay-interval="2000">
+                    <div class="slider-container">
+                        <div><img src="/static/main/images/coop1.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop2.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop3.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop1.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop2.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop3.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop1.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop2.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop3.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop1.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop2.png" loading="lazy" alt="..."></div>
+                        <div><img src="/static/main/images/coop3.png" loading="lazy" alt="..."></div>
+                    </div>
+                </div>
+            </div>
+        </coop_in>
+    </inner>
+</coop>
+

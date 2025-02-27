@@ -1,0 +1,122 @@
+{% load static %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <div class="login-header">
+            <h2>Вход в личный кабинет</h2>
+        </div>
+
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Логин</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+
+            {% if form.errors %}
+                <div class="error-message">
+                    Неверный логин или пароль
+                </div>
+            {% endif %}
+
+            <button type="submit" class="login-button">Войти</button>
+        </form>
+
+        <div class="login-footer">
+            <!-- Убираем ссылку на регистрацию -->
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        background-color: #f5f5f5;
+    }
+
+    .login-box {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+        padding: 30px;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .login-header h2 {
+        color: #333;
+        margin: 0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #666;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    .error-message {
+        color: #dc3545;
+        text-align: center;
+        margin-bottom: 15px;
+        padding: 10px;
+        background: #fff5f5;
+        border-radius: 5px;
+    }
+
+    .login-button {
+        width: 100%;
+        padding: 12px;
+        background: #7000FF;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .login-button:hover {
+        background: #5000CC;
+    }
+
+    .login-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .login-footer a {
+        color: #7000FF;
+        text-decoration: none;
+    }
+
+    .login-footer a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %} 
